@@ -1,33 +1,43 @@
 function homework2()
     %% Initial Conditions
-    y0 = [1;0;0;1];
-    tspan=[0 60];
+    y0 = [0;0;0;0];
+    tspan=[0 60]
 
     
     %% Calculate States using State Space Equations
-    [t2a,y2a] = ode45(@hw2ss2a,tspan,y0);
-    [t3a,y3a] = ode45(@hw2ss3a,tspan,y0);
+    [t2a,x2a] = ode45(@hw2ss2a,tspan,y0);
+    [t3a,x3a] = ode45(@hw2ss3a,tspan,y0);
     
     %% Calculate Output using State Space Equations
-    [t2b,y2b] = ode45(@hw2ss2b,tspan,y0);
-    [t3b,y3b] = ode45(@hw2ss3b,tspan,y0);
+    C = [125 0 0 0];
+    D = 0;
+    X1 = transpose(x2a);
+    y2b = (C*X1);
+    
+    C = [0 0 0 1];
+    D = 0;
+    X2 = transpose(x3a);
+    y3b = C*X2;
+    size(y3b)
+   % [t2b,y2b] = ode45(@hw2ss2b,tspan,y0);
+   % [t3b,y3b] = ode45(@hw2ss3b,tspan,y0);
     
     
     %% Plot States and Outputs 
     subplot(2,2,1);
-    plot(t2a,y2a(:,1));
+    plot(t2a,x2a(:,1));
     title('Controllable State Space States')
     
      subplot(2,2,2);
-     plot(t2b,y2b(:,1));
+     plot(t2a,y2b(1,:));
     title('Controllable State Space Output')
     
     subplot(2,2,3);
-    plot(t3a,y3a(:,1));
+    plot(t3a,x3a(:,1));
     title('Observable State Space States')
     
     subplot(2,2,4);
-    plot(t3b,y3b(:,1));
+    plot(t3a,y3b(1,:));
     title('Observable State Space Output')
 end
 
