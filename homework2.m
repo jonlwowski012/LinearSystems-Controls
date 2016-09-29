@@ -12,6 +12,8 @@ function homework2()
     C = [125 0 0 0];
     D = 0;
     X1 = transpose(x2a);
+    size(x2a)
+    
     y2b = (C*X1);
     
     C = [0 0 0 1];
